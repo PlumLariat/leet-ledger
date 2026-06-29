@@ -8,7 +8,8 @@ class AttemptSerializer(serializers.ModelSerializer):
     problem_id = serializers.PrimaryKeyRelatedField(
         queryset=Problem.objects.all(),
         source="problem",
-        write_only=True
+        write_only=True,
+        required=False,
     )
     class Meta:
         model = Attempt
