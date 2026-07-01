@@ -1,8 +1,12 @@
 import HealthCheck from "./components/HealthCheck"
+import ProblemList from "./components/ProblemList"
 
 function App() {
   return (
-    <HealthCheck/>
+    <div>
+      <HealthCheck />
+      <ProblemList />
+    </div>
   )
 }
 
