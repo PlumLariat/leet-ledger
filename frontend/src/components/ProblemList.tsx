@@ -1,53 +1,22 @@
-/*
-    {
-        "id": 13,
-        "problem_no": 11,
-        "title": "Container With Most Water",
-        "difficulty": "Medium",
-        "patterns": [
-            {
-                "id": 20,
-                "name": "Two pointer"
-            }
-        ],
-        "platform": "LeetCode",
-        "optimal_time_complexity": "O(n)",
-        "optimal_space_complexity": "O(1)"
-    },
-*/
-interface Pattern {
-  id: number;
-  name: string;
-}
+import { useEffect, useState } from "react";
+import { getProblemList } from "../api/client";
+import type Problem from "../interfaces/ProblemListInterface";
 
-interface Problem {
-  id: number;
-  problem_no: number;
-  title: string;
-  difficulty: string;
-  patterns: Pattern[];
-  platform: string;
-  optimal_time_complexity: string;
-  optimal_space_complexity: string;
-}
-
-const placeholder: Problem[] = [
-  {
-    id: 13,
-    problem_no: 11,
-    title: "Container With Most Water",
-    difficulty: "Medium",
-    patterns: [{ id: 20, name: "Two pointer" }],
-    platform: "LeetCode",
-    optimal_time_complexity: "O(n)",
-    optimal_space_complexity: "O(1)",
-  },
-];
 
 const ProblemList = () => {
+  const [problems, setProblems] = useState<Problem[]| null>(null);
+
+  useEffect(() => {
+    getProblemList()
+      .then(setProblems)
+      .catch(() => setProblems(null))
+  }, []);
+  if (!problems){
+    return <div>Querying backend for problems...</div>
+  }
   return (
     <div>
-      {placeholder.map((problem) => (
+      {problems.map((problem) => (
         <div key={problem.id}>
           <h3>
             {problem.problem_no}. {problem.title}
