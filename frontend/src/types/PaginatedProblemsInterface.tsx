@@ -1,10 +1,9 @@
-
 interface Pattern {
   id: number;
   name: string;
 }
 
-export default interface Problem {
+interface Problem {
   id: number;
   problem_no: number;
   title: string;
@@ -13,4 +12,11 @@ export default interface Problem {
   platform: string;
   optimal_time_complexity: string;
   optimal_space_complexity: string;
+}
+
+export default interface PaginatedProblems {
+    count: number,
+    next: string | null,
+    previous: string | null,
+    results: Problem[],
 }
