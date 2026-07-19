@@ -8,9 +8,23 @@ const RootLayout = () => (
       <Link to="/" className="[&.active]:font-bold">
         Home
       </Link>{' '}
+
+      <Link to="/problem" className="[&.active]:font-bold">
+        Problems
+      </Link>
+
+      <Link to="/new-attempt" className="[&.active]:font-bold">
+        New Attempt
+      </Link>
+
+      <Link to="/stats" className="[&.active]:font-bold">
+        Stats
+      </Link>
+
       <Link to="/about" className="[&.active]:font-bold">
         About
       </Link>
+
     </div>
     <hr />
     <Outlet />

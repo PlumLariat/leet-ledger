@@ -9,9 +9,27 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StatsRouteImport } from './routes/stats'
+import { Route as ProblemRouteImport } from './routes/problem'
+import { Route as NewAttemptRouteImport } from './routes/new-attempt'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const StatsRoute = StatsRouteImport.update({
+  id: '/stats',
+  path: '/stats',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProblemRoute = ProblemRouteImport.update({
+  id: '/problem',
+  path: '/problem',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NewAttemptRoute = NewAttemptRouteImport.update({
+  id: '/new-attempt',
+  path: '/new-attempt',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -26,31 +44,64 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/new-attempt': typeof NewAttemptRoute
+  '/problem': typeof ProblemRoute
+  '/stats': typeof StatsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/new-attempt': typeof NewAttemptRoute
+  '/problem': typeof ProblemRoute
+  '/stats': typeof StatsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/new-attempt': typeof NewAttemptRoute
+  '/problem': typeof ProblemRoute
+  '/stats': typeof StatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about'
+  fullPaths: '/' | '/about' | '/new-attempt' | '/problem' | '/stats'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about'
-  id: '__root__' | '/' | '/about'
+  to: '/' | '/about' | '/new-attempt' | '/problem' | '/stats'
+  id: '__root__' | '/' | '/about' | '/new-attempt' | '/problem' | '/stats'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  NewAttemptRoute: typeof NewAttemptRoute
+  ProblemRoute: typeof ProblemRoute
+  StatsRoute: typeof StatsRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/stats': {
+      id: '/stats'
+      path: '/stats'
+      fullPath: '/stats'
+      preLoaderRoute: typeof StatsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/problem': {
+      id: '/problem'
+      path: '/problem'
+      fullPath: '/problem'
+      preLoaderRoute: typeof ProblemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/new-attempt': {
+      id: '/new-attempt'
+      path: '/new-attempt'
+      fullPath: '/new-attempt'
+      preLoaderRoute: typeof NewAttemptRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -71,6 +122,9 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  NewAttemptRoute: NewAttemptRoute,
+  ProblemRoute: ProblemRoute,
+  StatsRoute: StatsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
