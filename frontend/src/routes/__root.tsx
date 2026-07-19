@@ -25,6 +25,9 @@ const RootLayout = () => (
         About
       </Link>
 
+      <Link to="/health-check" className="[&.active]:font-bold">
+        Health Check
+      </Link>
     </div>
     <hr />
     <Outlet />

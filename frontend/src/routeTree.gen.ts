@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as StatsRouteImport } from './routes/stats'
 import { Route as ProblemRouteImport } from './routes/problem'
 import { Route as NewAttemptRouteImport } from './routes/new-attempt'
+import { Route as HealthCheckRouteImport } from './routes/health-check'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -30,6 +31,11 @@ const NewAttemptRoute = NewAttemptRouteImport.update({
   path: '/new-attempt',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HealthCheckRoute = HealthCheckRouteImport.update({
+  id: '/health-check',
+  path: '/health-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -44,6 +50,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/health-check': typeof HealthCheckRoute
   '/new-attempt': typeof NewAttemptRoute
   '/problem': typeof ProblemRoute
   '/stats': typeof StatsRoute
@@ -51,6 +58,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/health-check': typeof HealthCheckRoute
   '/new-attempt': typeof NewAttemptRoute
   '/problem': typeof ProblemRoute
   '/stats': typeof StatsRoute
@@ -59,21 +67,31 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/health-check': typeof HealthCheckRoute
   '/new-attempt': typeof NewAttemptRoute
   '/problem': typeof ProblemRoute
   '/stats': typeof StatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/new-attempt' | '/problem' | '/stats'
+  fullPaths:
+    '/' | '/about' | '/health-check' | '/new-attempt' | '/problem' | '/stats'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/new-attempt' | '/problem' | '/stats'
-  id: '__root__' | '/' | '/about' | '/new-attempt' | '/problem' | '/stats'
+  to: '/' | '/about' | '/health-check' | '/new-attempt' | '/problem' | '/stats'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/health-check'
+    | '/new-attempt'
+    | '/problem'
+    | '/stats'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  HealthCheckRoute: typeof HealthCheckRoute
   NewAttemptRoute: typeof NewAttemptRoute
   ProblemRoute: typeof ProblemRoute
   StatsRoute: typeof StatsRoute
@@ -102,6 +120,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewAttemptRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/health-check': {
+      id: '/health-check'
+      path: '/health-check'
+      fullPath: '/health-check'
+      preLoaderRoute: typeof HealthCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -122,6 +147,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  HealthCheckRoute: HealthCheckRoute,
   NewAttemptRoute: NewAttemptRoute,
   ProblemRoute: ProblemRoute,
   StatsRoute: StatsRoute,
