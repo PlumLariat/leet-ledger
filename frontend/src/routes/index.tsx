@@ -1,9 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router'
+import UnderConstruction from '../components/UnderConstruction'
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/"!</div>
+  return <UnderConstruction routeName='Home'/>
 }
