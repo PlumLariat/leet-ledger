@@ -9,7 +9,7 @@ const RootLayout = () => (
         Home
       </Link>{' '}
 
-      <Link to="/problem" className="[&.active]:font-bold">
+      <Link to="/problems" className="[&.active]:font-bold">
         Problems
       </Link>
 

@@ -10,7 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StatsRouteImport } from './routes/stats'
-import { Route as ProblemRouteImport } from './routes/problem'
+import { Route as ProblemsRouteImport } from './routes/problems'
 import { Route as NewAttemptRouteImport } from './routes/new-attempt'
 import { Route as HealthCheckRouteImport } from './routes/health-check'
 import { Route as AboutRouteImport } from './routes/about'
@@ -21,9 +21,9 @@ const StatsRoute = StatsRouteImport.update({
   path: '/stats',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProblemRoute = ProblemRouteImport.update({
-  id: '/problem',
-  path: '/problem',
+const ProblemsRoute = ProblemsRouteImport.update({
+  id: '/problems',
+  path: '/problems',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewAttemptRoute = NewAttemptRouteImport.update({
@@ -52,7 +52,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/health-check': typeof HealthCheckRoute
   '/new-attempt': typeof NewAttemptRoute
-  '/problem': typeof ProblemRoute
+  '/problems': typeof ProblemsRoute
   '/stats': typeof StatsRoute
 }
 export interface FileRoutesByTo {
@@ -60,7 +60,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/health-check': typeof HealthCheckRoute
   '/new-attempt': typeof NewAttemptRoute
-  '/problem': typeof ProblemRoute
+  '/problems': typeof ProblemsRoute
   '/stats': typeof StatsRoute
 }
 export interface FileRoutesById {
@@ -69,22 +69,22 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/health-check': typeof HealthCheckRoute
   '/new-attempt': typeof NewAttemptRoute
-  '/problem': typeof ProblemRoute
+  '/problems': typeof ProblemsRoute
   '/stats': typeof StatsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/about' | '/health-check' | '/new-attempt' | '/problem' | '/stats'
+    '/' | '/about' | '/health-check' | '/new-attempt' | '/problems' | '/stats'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/health-check' | '/new-attempt' | '/problem' | '/stats'
+  to: '/' | '/about' | '/health-check' | '/new-attempt' | '/problems' | '/stats'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/health-check'
     | '/new-attempt'
-    | '/problem'
+    | '/problems'
     | '/stats'
   fileRoutesById: FileRoutesById
 }
@@ -93,7 +93,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   HealthCheckRoute: typeof HealthCheckRoute
   NewAttemptRoute: typeof NewAttemptRoute
-  ProblemRoute: typeof ProblemRoute
+  ProblemsRoute: typeof ProblemsRoute
   StatsRoute: typeof StatsRoute
 }
 
@@ -106,11 +106,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StatsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/problem': {
-      id: '/problem'
-      path: '/problem'
-      fullPath: '/problem'
-      preLoaderRoute: typeof ProblemRouteImport
+    '/problems': {
+      id: '/problems'
+      path: '/problems'
+      fullPath: '/problems'
+      preLoaderRoute: typeof ProblemsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new-attempt': {
@@ -149,7 +149,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   HealthCheckRoute: HealthCheckRoute,
   NewAttemptRoute: NewAttemptRoute,
-  ProblemRoute: ProblemRoute,
+  ProblemsRoute: ProblemsRoute,
   StatsRoute: StatsRoute,
 }
 export const routeTree = rootRouteImport

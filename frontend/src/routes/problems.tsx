@@ -1,8 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
-import ProblemList from '../components/ProblemList'
+import ProblemList from '../components/problem/ProblemList'
 
 
-export const Route = createFileRoute('/problem')({
+export const Route = createFileRoute('/problems')({
   component: RouteComponent,
 })
 
