@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router'
+
 type listItemInfo = {
     id: number;
     problemNumber: number | null;
@@ -8,7 +10,12 @@ const ProblemListItem = ({id, problemNumber, problemTitle} : listItemInfo) => {
  return(
     <li>
         <div>
-            <p>{problemNumber ?? "N/A"}. {problemTitle ?? "N/A"}</p>
+            <Link
+                to="/problems/$problemId"
+                params={{problemId: String(id)}}
+            >
+                <p>{problemNumber ?? "N/A"}. {problemTitle ?? "N/A"}</p>
+            </Link>
         </div>
     </li>
  );   
