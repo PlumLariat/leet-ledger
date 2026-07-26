@@ -9,9 +9,9 @@ from typing import cast
 def health(request):
     try:
         connection.ensure_connection()
-        return JsonResponse({"status": "ok", "database": "connected"})
+        return JsonResponse({"backend": "Ok", "database": "Connected"})
     except Exception:
-        return JsonResponse({"status": "ok", "database": "unreachable"}, status=503)
+        return JsonResponse({"backend": "Ok", "database": "Unreachable"}, status=503)
     
 class FirstAttemptView(APIView):
     def post(self, request):
