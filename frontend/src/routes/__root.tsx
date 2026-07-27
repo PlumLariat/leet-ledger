@@ -1,10 +1,13 @@
-
-import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
-import type { QueryClient } from '@tanstack/react-query'
+import {
+  createRootRouteWithContext,
+  Link,
+  Outlet,
+} from '@tanstack/react-router';
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools';
+import type { QueryClient } from '@tanstack/react-query';
 
 interface RouterContext {
-  queryClient: QueryClient
+  queryClient: QueryClient;
 }
 
 const RootLayout = () => (
@@ -13,23 +16,18 @@ const RootLayout = () => (
       <Link to="/" className="[&.active]:font-bold">
         Home
       </Link>{' '}
-
       <Link to="/problems" className="[&.active]:font-bold">
         Problems
       </Link>
-
       <Link to="/new-attempt" className="[&.active]:font-bold">
         New Attempt
       </Link>
-
       <Link to="/stats" className="[&.active]:font-bold">
         Stats
       </Link>
-
       <Link to="/about" className="[&.active]:font-bold">
         About
       </Link>
-
       <Link to="/health-check" className="[&.active]:font-bold">
         Health Check
       </Link>
@@ -38,6 +36,8 @@ const RootLayout = () => (
     <Outlet />
     <TanStackRouterDevtools />
   </>
-)
+);
 
-export const Route = createRootRouteWithContext<RouterContext>()({ component: RootLayout })
+export const Route = createRootRouteWithContext<RouterContext>()({
+  component: RootLayout,
+});

@@ -1,4 +1,4 @@
-import type Pattern from "./PatternInterface";
+import type Pattern from './PatternInterface';
 
 export default interface Problem {
   id: number;

@@ -1,10 +1,10 @@
-import { createFileRoute } from '@tanstack/react-router'
-import UnderConstruction from '../components/UnderConstruction'
+import { createFileRoute } from '@tanstack/react-router';
+import UnderConstruction from '../components/UnderConstruction';
 
 export const Route = createFileRoute('/')({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  return <UnderConstruction routeName='Home'/>
+  return <UnderConstruction routeName="Home" />;
 }
