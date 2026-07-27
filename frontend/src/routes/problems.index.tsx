@@ -3,7 +3,7 @@ import { API_BASE_URL } from '../api/client';
 import type PaginatedProblems from '../types/PaginatedProblemInterface';
 import { queryOptions, useSuspenseQuery } from '@tanstack/react-query';
 import { useState } from 'react';
-import ProblemListItem from '../components/problem/ProblemListItem';
+import ProblemListItem from '../components/ProblemListItem';
 
 const url = API_BASE_URL + '/api/problems/';
 
