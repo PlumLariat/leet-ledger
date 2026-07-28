@@ -1,9 +1,10 @@
-import { createFileRoute, useLoaderData } from '@tanstack/react-router';
+import { createFileRoute, useLoaderData, useParams, type StringifyParamsFn } from '@tanstack/react-router';
 import { API_BASE_URL } from '../api/client';
 import type ProblemDetails from '../types/ProblemDetailsInterface';
-import { queryOptions } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 
 const PROBLEM_DETAIL_URL = API_BASE_URL + '/api/problems/';
+const ATTEMPTS_DETAIL_URL = API_BASE_URL + '/api/attempts/';
 
 const problemDetailQuery = (problemId: string) => {
   return queryOptions({
@@ -19,6 +20,41 @@ const problemDetailQuery = (problemId: string) => {
   });
 };
 
+interface AttemptDetails {
+  count: number;
+  next: null | string;
+  previous: null | string;
+  results: Attempt[];
+}
+
+interface Attempt {
+    id: number;
+    problem: ProblemDetails;
+    date: string;
+    hints_used: number;
+    my_time_complexity: string;
+    my_space_complexity: string;
+    time_taken: string;
+    status: string;
+    next_review: string | null;
+    times_reviewed: number;
+    notes: string;
+}
+
+const attemptsQuery = (problemId: string) => {
+  return queryOptions({
+    queryKey: [`Attempts${problemId}`],
+    queryFn: async (): Promise<AttemptDetails> => {
+      const response = await fetch(`${ATTEMPTS_DETAIL_URL}?problem=${problemId}`);
+      if (!response.ok)
+        throw new Error(
+          `Failed to fetch attempt details for: ${problemId}`
+      );
+      return (await response.json()) as AttemptDetails;
+    },
+  });
+};
+
 export const Route = createFileRoute('/problems/$problemId')({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(problemDetailQuery(params.problemId)),
@@ -26,9 +62,13 @@ export const Route = createFileRoute('/problems/$problemId')({
 });
 
 function ProblemDetailPage() {
+  const frontend_param = useParams({from: '/problems/$problemId'});
   const details: ProblemDetails = Route.useLoaderData();
+  const { data: attemptsData } = useQuery(attemptsQuery(frontend_param.problemId));
+
   return (
     <div>
+      {/* General Problem Description */}
       <h3>
         {details.problem_no}. {details.title}
       </h3>
@@ -41,6 +81,30 @@ function ProblemDetailPage() {
         Optimal: {details.optimal_time_complexity} time/{' '}
         {details.optimal_space_complexity} space
       </p>
+
+
+      {/* Attempts Section */}
+      <h2>Attempts</h2>
+      {/* Example fetch: http://localhost:8000/api/attempts/?problem=44 */}
+      <ul>
+      {attemptsData?.results?.map((result) => (
+        <div key={result.id}>
+          <p>Data: {result.date}</p>
+          <p>Hints Used: {result.hints_used ?? "NA"}</p>
+
+        <p>
+          Optimal: {result.my_time_complexity} time/{' '}
+          {result.my_space_complexity} space
+        </p>
+        <p>Time Taken: {result.time_taken}</p>
+        <p>Status: {result.status}</p>
+        <p>Next Review: {result.next_review}</p>
+        <p>Times Reviewed: {result.times_reviewed}</p>
+        <p>Notes: {result.notes}</p>
+        </div>
+        )
+      )}
+      </ul>
     </div>
   );
 }
