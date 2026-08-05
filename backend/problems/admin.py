@@ -1,13 +1,16 @@
 from django.contrib import admin
-from .models import Problem, Pattern
+
+from .models import Pattern, Problem
+
 
 @admin.register(Pattern)
 class PatternAdmin(admin.ModelAdmin):
-    list_display = ['name']
-    search_fields = ['name']
+    list_display = ["name"]
+    search_fields = ["name"]
+
 
 @admin.register(Problem)
 class ProblemAdmin(admin.ModelAdmin):
-    list_display = ['problem_no', 'title', 'difficulty', 'platform']
-    list_filter = ['difficulty', 'platform']
-    search_fields = ['title']
+    list_display = ["problem_no", "title", "difficulty", "platform"]
+    list_filter = ["difficulty", "platform"]
+    search_fields = ["title"]

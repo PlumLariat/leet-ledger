@@ -4,37 +4,72 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Pattern',
+            name="Pattern",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, unique=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100, unique=True)),
             ],
             options={
-                'ordering': ['name'],
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='Problem',
+            name="Problem",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('problem_no', models.PositiveIntegerField(blank=True, null=True)),
-                ('title', models.CharField(max_length=255)),
-                ('difficulty', models.CharField(choices=[('Easy', 'Easy'), ('Medium', 'Medium'), ('Hard', 'Hard')], max_length=10)),
-                ('platform', models.CharField(default='LeetCode', max_length=50)),
-                ('optimal_time_complexity', models.CharField(blank=True, max_length=50)),
-                ('optimal_space_complexity', models.CharField(blank=True, max_length=50)),
-                ('patterns', models.ManyToManyField(blank=True, related_name='problems', to='problems.pattern')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("problem_no", models.PositiveIntegerField(blank=True, null=True)),
+                ("title", models.CharField(max_length=255)),
+                (
+                    "difficulty",
+                    models.CharField(
+                        choices=[
+                            ("Easy", "Easy"),
+                            ("Medium", "Medium"),
+                            ("Hard", "Hard"),
+                        ],
+                        max_length=10,
+                    ),
+                ),
+                ("platform", models.CharField(default="LeetCode", max_length=50)),
+                (
+                    "optimal_time_complexity",
+                    models.CharField(blank=True, max_length=50),
+                ),
+                (
+                    "optimal_space_complexity",
+                    models.CharField(blank=True, max_length=50),
+                ),
+                (
+                    "patterns",
+                    models.ManyToManyField(
+                        blank=True, related_name="problems", to="problems.pattern"
+                    ),
+                ),
             ],
             options={
-                'ordering': ['title'],
+                "ordering": ["title"],
             },
         ),
     ]

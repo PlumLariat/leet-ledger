@@ -1,16 +1,18 @@
 from django.db import models
 
+
 # Create your models here.
 class Pattern(models.Model):
     """Reusable M2M tag, eg: 'Array', 'Two Pointer', 'DFS'."""
+
     name = models.CharField(max_length=100, unique=True)
 
     class Meta:
-        ordering = ['name']
+        ordering = ["name"]
 
     def __str__(self):
         return self.name
-    
+
 
 class Problem(models.Model):
     DIFFICULTY_CHOICES = [
@@ -28,7 +30,7 @@ class Problem(models.Model):
     optimal_space_complexity = models.CharField(max_length=50, blank=True)
 
     class Meta:
-        ordering = ['title']
+        ordering = ["title"]
 
     def __str__(self) -> str:
         return f"{self.problem_no}. {self.title}" if self.problem_no else self.title

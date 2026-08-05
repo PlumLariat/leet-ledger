@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import Attempt
+
 from problems.models import Problem
 from problems.serializers import ProblemSerializer
+
+from .models import Attempt
+
 
 class AttemptSerializer(serializers.ModelSerializer):
     problem = ProblemSerializer(read_only=True)
@@ -11,6 +14,7 @@ class AttemptSerializer(serializers.ModelSerializer):
         write_only=True,
         required=False,
     )
+
     class Meta:
         model = Attempt
         fields = [
@@ -25,5 +29,5 @@ class AttemptSerializer(serializers.ModelSerializer):
             "status",
             "next_review",
             "times_reviewed",
-            "notes"
+            "notes",
         ]

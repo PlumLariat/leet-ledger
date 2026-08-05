@@ -1,11 +1,13 @@
-from typing import Any
-from problems.models import Problem, Pattern
-from progress.models import Attempt
-from pathlib import Path
 import csv
 from datetime import timedelta
+from pathlib import Path
+from typing import Any
 
 from django.core.management.base import BaseCommand, CommandError, CommandParser
+
+from problems.models import Pattern, Problem
+from progress.models import Attempt
+
 
 def parse_duration(value: str) -> timedelta | None:
     """Converts MM:SS or HH:MM:SS to a timedelta object or None if data
@@ -17,10 +19,13 @@ def parse_duration(value: str) -> timedelta | None:
         if len(parts) == 2:
             return timedelta(minutes=int(parts[0]), seconds=int(parts[1]))
         elif len(parts) == 3:
-            return timedelta(hours=int(parts[0]), minutes=int(parts[1]), seconds=int(parts[2]))
-    except (ValueError, AttributeError):
+            return timedelta(
+                hours=int(parts[0]), minutes=int(parts[1]), seconds=int(parts[2])
+            )
+    except ValueError, AttributeError:
         return None
-    
+
+
 def parse_complexity(value: str | None, index: int) -> str:
     """Split a string like 'O(n) | O(n)' and return specified half or
     empty string"""
@@ -39,14 +44,17 @@ class Command(BaseCommand):
         parser.add_argument(
             "file_name",
             type=Path,
-            help="Csv file paths that contain LeetCode problem and attempt data to be imported."
+            help=(
+                "Csv file paths that contain LeetCode problem and "
+                "attempt data to be imported."
+            ),
         )
 
     def handle(self, *args: Any, **options: Any) -> str | None:
         # get the file from the parser
-        file: Path = options['file_name']
+        file: Path = options["file_name"]
 
-        # Basic file validation 
+        # Basic file validation
         if not file.exists():
             raise CommandError("Could not find specified file.")
         if file.suffix.lower() != ".csv" or not file.is_file():
@@ -54,21 +62,22 @@ class Command(BaseCommand):
 
         # Count rows in csv
         row_cnt = 0
-        with open(file, mode='r', encoding='utf-8') as csv_file:
+        with open(file, mode="r", encoding="utf-8") as csv_file:
             # subtract 1, exclude header from the count
             row_cnt = sum(1 for _ in csv_file) - 1
 
         # User feedback for file found
         self.stdout.write(
-            self.style.SUCCESS(f"Found file: {file}\nAttempting to Parse {row_cnt} rows of data.")
+            self.style.SUCCESS(
+                f"Found file: {file}\nAttempting to Parse {row_cnt} rows of data."
             )
-        
+        )
+
         # attempt to open the csv file
-        with open(file, newline='', encoding='utf-8') as csv_file:
+        with open(file, newline="", encoding="utf-8") as csv_file:
             reader = csv.DictReader(csv_file)
 
             # lists for all three models' bulk insert
-            problems = []
             attempts = []
             # all unique pattern names
             pattern_names: set[str] = set()
@@ -89,7 +98,6 @@ class Command(BaseCommand):
 
             # create a mapping for pattern names to reference in other inserts
             pattern_map: dict[str, Pattern] = {p.name: p for p in Pattern.objects.all()}
-
 
             for row in rows:
                 raw_no = row.get("problem_no") or ""
@@ -119,25 +127,27 @@ class Command(BaseCommand):
                 if pattern_objs:
                     problem.patterns.set(pattern_objs)
 
-                attempts.append(Attempt(
-                    problem=problem,
-                    date=row["date"],
-                    hints_used=int(row.get("hints used") or 0),
-                    my_time_complexity=parse_complexity(
-                        row.get("my time-space complexity"), 0
-                    ),
-                    my_space_complexity=parse_complexity(
-                        row.get("my time-space complexity"), 1
-                    ),
-                    time_taken=parse_duration(row.get("time")),
-                    status=row["status"],
-                    next_review=row.get("next_review") or None,
-                    times_reviewed=int(row.get("times_reviewed") or 0),
-                    notes=row.get("notes") or "",
-                ))
-            
+                attempts.append(
+                    Attempt(
+                        problem=problem,
+                        date=row["date"],
+                        hints_used=int(row.get("hints used") or 0),
+                        my_time_complexity=parse_complexity(
+                            row.get("my time-space complexity"), 0
+                        ),
+                        my_space_complexity=parse_complexity(
+                            row.get("my time-space complexity"), 1
+                        ),
+                        time_taken=parse_duration(row.get("time")),
+                        status=row["status"],
+                        next_review=row.get("next_review") or None,
+                        times_reviewed=int(row.get("times_reviewed") or 0),
+                        notes=row.get("notes") or "",
+                    )
+                )
+
             Attempt.objects.bulk_create(attempts)
-        
+
         self.stdout.write(
             self.style.SUCCESS(f"Import complete. {len(attempts)} attempts created.")
         )

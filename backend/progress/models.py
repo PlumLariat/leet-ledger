@@ -1,5 +1,7 @@
 from django.db import models
+
 from problems.models import Problem
+
 
 # Create your models here.
 class Attempt(models.Model):
@@ -11,7 +13,9 @@ class Attempt(models.Model):
         ("DNF", "Did Not Finish"),
     ]
 
-    problem = models.ForeignKey(Problem, on_delete=models.CASCADE, related_name="attempts")
+    problem = models.ForeignKey(
+        Problem, on_delete=models.CASCADE, related_name="attempts"
+    )
     date = models.DateField()
     hints_used = models.PositiveIntegerField(default=0)
     my_time_complexity = models.CharField(max_length=50, blank=True)
@@ -23,7 +27,7 @@ class Attempt(models.Model):
     notes = models.TextField(blank=True)
 
     class Meta:
-        ordering = ['-date']
+        ordering = ["-date"]
 
     def __str__(self) -> str:
         return f"{self.problem.title} - {self.date} ({self.status})"

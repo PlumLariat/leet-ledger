@@ -5,31 +5,57 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('problems', '0001_initial'),
+        ("problems", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Attempt',
+            name="Attempt",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateField()),
-                ('hints_used', models.PositiveIntegerField(default=0)),
-                ('my_time_complexity', models.CharField(blank=True, max_length=50)),
-                ('my_space_complexity', models.CharField(blank=True, max_length=50)),
-                ('time_taken', models.DurationField(blank=True, null=True)),
-                ('status', models.CharField(choices=[('AC', 'Accepted'), ('WA', 'Wrong Answer'), ('TLE', 'Time Limit Exceeded'), ('MLE', 'Memory Limit Exceeded'), ('DNF', 'Did Not Finish')], max_length=10)),
-                ('next_review', models.DateField(blank=True, null=True)),
-                ('times_reviewed', models.PositiveIntegerField(default=0)),
-                ('notes', models.TextField(blank=True)),
-                ('problem', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='attempts', to='problems.problem')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateField()),
+                ("hints_used", models.PositiveIntegerField(default=0)),
+                ("my_time_complexity", models.CharField(blank=True, max_length=50)),
+                ("my_space_complexity", models.CharField(blank=True, max_length=50)),
+                ("time_taken", models.DurationField(blank=True, null=True)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("AC", "Accepted"),
+                            ("WA", "Wrong Answer"),
+                            ("TLE", "Time Limit Exceeded"),
+                            ("MLE", "Memory Limit Exceeded"),
+                            ("DNF", "Did Not Finish"),
+                        ],
+                        max_length=10,
+                    ),
+                ),
+                ("next_review", models.DateField(blank=True, null=True)),
+                ("times_reviewed", models.PositiveIntegerField(default=0)),
+                ("notes", models.TextField(blank=True)),
+                (
+                    "problem",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="attempts",
+                        to="problems.problem",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-date'],
+                "ordering": ["-date"],
             },
         ),
     ]
