@@ -1,9 +1,9 @@
-import type HealthResponse from '../types/HealthResponseInterface';
+// client.ts
 
+// Constant that represents the backend url for use in forming fetch requests,
+// append to this string to access other backend endpoints.
 export const API_BASE_URL: string =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
-
-export async function getHealth(): Promise<HealthResponse> {
-  const res = await fetch(`${API_BASE_URL}/api/health/`);
-  return res.json() as Promise<HealthResponse>;
-}
+  // Try to import an environmental variable located in roots .env first.
+  import.meta.env.VITE_API_BASE_URL ||
+  // If that doesn't exist, fall back to local dev backend at port 8000.
+  'http://localhost:8000';
