@@ -9,8 +9,8 @@ const UnderConstruction = ({ routeName }: { routeName: string }) => {
           Under Construction
         </h1>
         <p className="mt-3 text-sm text-gray-500 sm:text-base">
-          "<span className="text-red-400">{routeName}</span>" is currently
-          being worked on. Check back later.
+          "<span className="text-red-400">{routeName}</span>" is currently being
+          worked on. Check back later.
         </p>
       </div>
     </div>

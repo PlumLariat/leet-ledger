@@ -16,7 +16,7 @@ export default interface Problem {
   title: string;
 
   // Difficulty of problem.
-  difficulty: "Easy" | "Medium" | "Hard";
+  difficulty: 'Easy' | 'Medium' | 'Hard';
 
   // See PatternInterface.ts (no patterns is empty list []).
   patterns: Pattern[];
@@ -27,7 +27,7 @@ export default interface Problem {
 
   // Big-O notation for time complexity of the problem as list by hosting site.
   optimal_time_complexity: string;
-  
+
   // Same as above but for space complexity (both null is the empty string).
   optimal_space_complexity: string;
 }

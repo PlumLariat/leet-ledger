@@ -138,7 +138,7 @@ class Command(BaseCommand):
                         my_space_complexity=parse_complexity(
                             row.get("my time-space complexity"), 1
                         ),
-                        time_taken=parse_duration(row.get("time")),
+                        time_taken=parse_duration(row.get("time") or ""),
                         status=row["status"],
                         next_review=row.get("next_review") or None,
                         times_reviewed=int(row.get("times_reviewed") or 0),
